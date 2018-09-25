@@ -176,8 +176,8 @@ fastLink <- function(dfA, dfB, varnames,
         estimate.only <- FALSE
         cat("You have provided an EM object but have set 'estimate.only' to TRUE. Setting 'estimate.only' to FALSE so that matched indices are returned.\n")
     }
-    if(!(stringdist.method %in% c("jw", "jaro", "lv"))){
-        stop("Invalid string distance method. Method should be one of 'jw', 'jaro', or 'lv'.")
+    if(!(stringdist.method %in% c("jw", "jaro", "lv","cosine"))){
+        stop("Invalid string distance method. Method should be one of 'jw', 'jaro', 'lv', or 'cosine'.")
     }
     if(stringdist.method == "jw" & !is.null(jw.weight)){
         if(jw.weight < 0 | jw.weight > 0.25){

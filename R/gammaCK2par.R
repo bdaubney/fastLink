@@ -49,8 +49,8 @@ gammaCK2par <- function(matAp, matBp, n.cores = NULL, cut.a = 0.92, method = "jw
         cat("WARNING: You have no variation in this variable, or all observations are missing in dataset B.")
     }
 
-    if(!(method %in% c("jw", "jaro", "lv"))){
-        stop("Invalid string distance method. Method should be one of 'jw', 'jaro', or 'lv'.")
+    if(!(method %in% c("jw", "jaro", "lv", "cosine"))){
+        stop("Invalid string distance method. Method should be one of 'jw', 'jaro', 'lv', or 'cosine'.")
     }
 
     if(method == "jw" & !is.null(w)){
@@ -115,7 +115,11 @@ gammaCK2par <- function(matAp, matBp, n.cores = NULL, cut.a = 0.92, method = "jw
             t[ t < cut ] <- 0
             t <- Matrix(t, sparse = T)
         }
-        
+		if(strdist == "cosine") {
+            t <- 1 - stringdistmatrix(e, x, method = "cosine", nthread = 1)
+            t[ t < cut ] <- 0
+            t <- Matrix(t, sparse = T)
+        }
         t@x[t@x >= cut] <- 2; gc()       	
         slice.1 <- m[[2]]
         slice.2 <- y[[2]]

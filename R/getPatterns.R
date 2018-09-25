@@ -45,8 +45,8 @@ getPatterns <- function(matchesA, matchesB, varnames,
     if(any(class(matchesB) %in% c("tbl_df", "data.table"))){
         matchesB <- as.data.frame(matchesB)
     }
-    if(!(stringdist.method %in% c("jw", "jaro", "lv"))){
-        stop("Invalid string distance method. Method should be one of 'jw', 'jaro', or 'lv'.")
+    if(!(stringdist.method %in% c("jw", "jaro", "lv","cosine"))){
+        stop("Invalid string distance method. Method should be one of 'jw', 'jaro', 'lv', or 'cosine'.")
     }
     if(stringdist.method == "jw" & !is.null(jw.weight)){
         if(jw.weight < 0 | jw.weight > 0.25){
@@ -77,6 +77,9 @@ getPatterns <- function(matchesA, matchesB, varnames,
                     p1 <- NULL
                 }
                 tmp <- 1 - stringdist(matchesA[,varnames[i]], matchesB[,varnames[i]], "jw", p = p1)
+			} else if(stringdist.method == "cosine"){
+				tmp <- 1 - stringdist(matchesA[,varnames[i]], matchesB[,varnames[i]], "cosine")
+			}
             }else{
                 t <- stringdist(matchesA[,varnames[i]], matchesB[,varnames[i]], method = stringdist.method)
                 t.1 <- nchar(matchesA[,varnames[i]])
