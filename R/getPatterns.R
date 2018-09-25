@@ -79,7 +79,6 @@ getPatterns <- function(matchesA, matchesB, varnames,
                 tmp <- 1 - stringdist(matchesA[,varnames[i]], matchesB[,varnames[i]], "jw", p = p1)
 			}else if(stringdist.method == "cosine"){
 				tmp <- 1 - stringdist(matchesA[,varnames[i]], matchesB[,varnames[i]], "cosine")
-			}
             }else{
                 t <- stringdist(matchesA[,varnames[i]], matchesB[,varnames[i]], method = stringdist.method)
                 t.1 <- nchar(matchesA[,varnames[i]])
